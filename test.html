@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a{
+            background: #00b3ee;
+            color: black;
+        }
+        a:hover{
+            background: #ebccd1;
+            color: #b84c4c;
+        }
+        a:active{
+            background-color:yellow;
+        }
+        .tea-toast {
+            position: fixed;
+            display: inline-block;
+            text-align: left;
+            min-width: 80px;
+            opacity: 0;
+            top: -56px;
+            left: 50%;
+            transform: translate(-50%,0);
+            padding: 6px 20px 6px 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-all;
+            word-wrap: break-word;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 2px 7px 0 rgba(5,34,97,.2);
+            background-color: #fff;
+            font-size: 0;
+            -webkit-transition: all cubic-bezier(.4,0,.2,1) .5s;
+            transition: all cubic-bezier(.4,0,.2,1) .5s;
+            z-index: 2001;
+        }
+        .tea-toast-show{
+            z-index: 2000;
+            opacity: 1;
+            top: 0;
+            -webkit-transition: all cubic-bezier(.4,0,.2,1) .5s;
+            transition: all cubic-bezier(.4,0,.2,1) .5s;
+        }
+    </style>
+    <script>
+
+        function show() {
+            document.getElementById("ah1").setAttribute("class", "tea-toast-show")
+        }
+    </script>
+</head>
+<body>
+<a href="" id="ah1" class="tea-toast">测试一</a>
+<a href="#" onclick="show()">测试二</a>
+<a href="">测试三</a>
+<a href="">测试四</a>
+</body>
+</html>

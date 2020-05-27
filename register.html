@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script src="resource/js/jquery-1.7.2.min.js"></script>
+    <script>
+        function verify_exist() {
+            $.ajax({
+                url:"/exam/account/user_exist.php",
+                data:"username="+$("#username").val(),
+                type:"post",
+                dataType:"json",
+                statusCode:{
+                    200:function (data) {
+                        // console.log(data)
+                        if (data[0] == "true"){
+                            document.getElementById("username").setAttribute("style", "border:2px solid green;")
+                            $("#i_uname").html("该用户名可以注册！")
+                            $("#i_uname").css("color", "green")
+                        }else if (data[0] == "false-1"){
+                            document.getElementById("username").setAttribute("style", "border:2px solid red;")
+                            $("#i_uname").html("用户名重复！")
+                            $("#i_uname").css("color", "red")
+
+
+                            return
+                        }else if (data[0] == "false-2"){
+                            document.getElementById("username").setAttribute("style", "border:2px solid red;")
+                            $("#i_uname").html("用户名太短！")
+                            $("#i_uname").css("color", "red")
+
+                            return
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+    <style>
+        #reg_div {
+            text-align: center;
+            height: 400px;
+            width: 400px;
+            border-radius: 10px;
+            background: darkgrey;
+            box-shadow: black 2px 2px 2px 2px;
+            margin: 15% auto;
+        }
+
+        #btn_sub, #btn_reg, #btn_rtn{
+            background: lightsteelblue;
+            border-width: 1px;
+            border-color: #1e347b;
+            border-radius: 10px;
+            width: 60px;
+        }
+
+        ul, ol, li {
+            list-style: none;
+        }
+        input{
+            border-radius: 5px;
+            border-width: 1px;
+            box-shadow: #00b3ee 1px 1px;
+        }
+        input[type="button"]{
+            box-shadow: #b84c4c 2px 2px;
+
+        }
+        input[type="button"]:hover{
+            transform: scale(1.2);
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="background-repeat: repeat;" background="resource/images/bg3.jfif">
+<form id="reg_form" action="account/register.php" method="post">
+<div id="reg_div">
+    <div id="logo">注册账号</div>
+    <br/>
+    <ul>
+        <li>
+            用&nbsp;户&nbsp;名&nbsp;：<input type="text" onblur="verify_exist()" placeholder="用户名长度大于等于5" name="username" id="username">
+
+        </li>
+        <li>
+            <span id="i_uname" style="color: red">&nbsp;</span>
+        </li>
+        <li>
+            密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" id="password">
+        </li>
+        <li>
+            <span id="i_pwd" style="color: red">&nbsp;</span>
+        </li>
+        <li>
+            确认密码：<input type="password" name="password2" id="password2">
+        </li>
+        <li>
+            <span id="i_pwd2" style="color: red">&nbsp;</span>
+        </li>
+        <li>
+            <img src="account/image_captcha.php" id="captcha" name="captcha" onclick="this.src='account/image_captcha.php?'+new Date().getTime();"
+                 width="160px" height="60px"><br/>
+            <input type="text" id="captcha2" name="captcha" placeholder="请输入图片中的验证码">
+
+        </li>
+        <li>
+            <span id="i_cap" style="color: red">&nbsp;</span><br/><br/>
+        </li>
+        <li>
+            <input type="button" id="btn_reg" name="btn_reg" value="注册">
+            <input type="button" id="btn_rtn" name="btn_rtn" value="返回">
+
+        </li>
+
+    </ul>
+
+</div>
+</form>
+
+<script>
+
+    $("#btn_rtn").click(function () {//点击返回按钮
+        window.location = "index.html";
+    })
+    
+    
+
+    $("#btn_reg").click(function () {//点击注册按钮
+        var username = $("#username").val()
+        var password = $("#password").val()
+        var password2 = $("#password2").val()
+        if (username.length < 5){
+            document.getElementById("username").setAttribute("style", "border:2px solid red;")
+            $("#i_uname").html("用户名不得少于5个字符！")
+            return
+        }else {
+            $("#i_uname").html("&nbsp;")
+            document.getElementById("username").removeAttribute("style")
+        }
+
+        if (password.length == ""){
+            document.getElementById("password").setAttribute("style", "border:2px solid red;")
+            $("#i_pwd").html("密码不能为空！")
+            return
+        }else {
+            $("#i_pwd").html("&nbsp;")
+            document.getElementById("password").removeAttribute("style")
+        }
+
+        if (password2.length == "" || password != password2){
+            document.getElementById("password2").setAttribute("style", "border:2px solid red;")
+            $("#i_pwd2").html("两次密码不一致！")
+            return
+        }else {
+            $("#i_pwd2").html("&nbsp;")
+            document.getElementById("password2").removeAttribute("style")
+        }
+
+        $.ajax({
+            url:"/exam/account/register.php",
+            data:$("#reg_form").serialize(),
+            type:"post",
+            dataType:"json",
+            statusCode:{
+                200:function (data) {
+                    console.log(data)
+                    if (data[0] == "true"){
+                        alert("注册成功！点击确定跳转登录界面。")
+                        window.location = "index.html"
+                    }else if (data[0] == "false-1"){
+                        document.getElementById("username").setAttribute("style", "border:2px solid red;")
+                        $("#i_uname").html("用户名重复！")
+                        return
+                    }else if (data[0] == "false-2"){
+                        $("#i_cap").html("验证码不正确！")
+                        document.getElementById("captcha").setAttribute("style", "border:2px solid red;")
+                        document.getElementById("captcha2").setAttribute("style", "border:2px solid red;")
+
+                        return;
+                    }else if (data[0] == "false-3"){
+                        document.getElementById("username").setAttribute("style", "border:2px solid red;")
+                        $("#i_uname").html("用户名太短！")
+                        $("#i_uname").css("color", "red")
+
+                        return
+                    }
+                }
+            }
+        })
+
+    })
+
+</script>
+
+</body>
+</html>

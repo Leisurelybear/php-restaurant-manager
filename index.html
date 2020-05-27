@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="resource/js/jquery-1.7.2.min.js"></script>
+    <style>
+        #login_div{
+            text-align: center;
+            height: 200px;
+            width: 400px;
+            border-radius: 10px;
+            background: darkgrey;
+            box-shadow: black 2px 2px 2px 2px;
+            margin: 15% auto;
+        }
+        ul,ol,li{
+            list-style: none;
+        }
+        #btn_sub, #btn_reg, #btn_main, #btn_manage{
+            background: lightsteelblue;
+            border-width: 1px;
+            border-color: #1e347b;
+            border-radius: 10px;
+            width: 80px;
+        }
+        input{
+            border-radius: 5px;
+            border-width: 1px;
+            box-shadow: #00b3ee 1px 1px;
+        }
+        input[type="button"]{
+            box-shadow: #b84c4c 2px 2px;
+            
+        }
+        input[type="button"]:hover{
+            transform: scale(1.2);
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body style="background-repeat: repeat;" background="resource/images/bg3.jfif">
+<form method="post" id="form_login" action="account/login.php" >
+    <div id="login_div" >
+        <div id="logo">餐厅系统登陆</div>
+            <br/>
+            <ul>
+                <li>
+                    用户名：<input type="text" name="username" id="username">
+                </li>
+                <li>
+                    <br/>
+                </li>
+                <li>
+                    密&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" id="password">
+                </li>
+                <li>
+                    <br/>
+                </li>
+                <li>
+                    <input type="button" id="btn_sub" name="btn_sub" value="登录">
+                    <input type="button" id="btn_reg" name="btn_reg" value="注册">
+                    <input type="button" id="btn_main" name="btn_main" value="进入主页">
+                    <input type="button" id="btn_manage" name="btn_manage" value="后台管理">
+
+                </li>
+            </ul>
+    </div>
+</form>
+<script>
+
+    $("#btn_sub").click(function () {
+        document.getElementById("form_login").setAttribute("acction", "account/login.php")
+        document.getElementById("form_login").submit()
+    })
+    $("#btn_reg").click(function () {
+        window.location = "register.html"
+    })
+    $("#btn_main").click(function () {
+        window.location = "main.php"
+    })
+    $("#btn_manage").click(function () {
+        window.location = "manage.php"
+    })
+    
+</script>
+
+</body>
+</html>
